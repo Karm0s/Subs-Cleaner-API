@@ -16,6 +16,8 @@ def get_authorization_url(redirect_url):
         client_secret_file_path, 
         [
             'https://www.googleapis.com/auth/youtube.force-ssl',
+            'https://www.googleapis.com/auth/youtubepartner',
+            'https://www.googleapis.com/auth/youtube'
         ]
     )
 

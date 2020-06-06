@@ -1,7 +1,7 @@
 from flask import request, jsonify, session, url_for, redirect, Blueprint
 
 from app.main.utils.youtube_api.google_auth import get_authorization_url, exchange_code_for_credentials
-
+from app.main.utils.youtube_api.subscriptions_manager import subscriptions_manager
 
 authorization = Blueprint('authorization', __name__)
 
@@ -21,6 +21,8 @@ def oauth2callback():
     state = session['state']
     
     session['credentials'] = exchange_code_for_credentials(url_for('authorization.oauth2callback', _external=True), request.url)
+
+    subscriptions_manager.build(session['credentials'])
 
     return {
         'message_code': 200,

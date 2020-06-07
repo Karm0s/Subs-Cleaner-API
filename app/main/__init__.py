@@ -7,6 +7,7 @@ from .config import config_by_name
 
 from .ressources.authorization import authorization
 from .ressources.subscription import subscription
+from .ressources.error import error
 
 db = SQLAlchemy()
 mm = Marshmallow()
@@ -22,5 +23,6 @@ def create_app(config_name):
 
     app.register_blueprint(authorization)
     app.register_blueprint(subscription)
+    app.register_blueprint(error)
 
     return app

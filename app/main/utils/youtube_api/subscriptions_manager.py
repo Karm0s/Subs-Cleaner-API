@@ -2,6 +2,9 @@ import google_auth_oauthlib.flow
 import google.oauth2.credentials
 
 import googleapiclient.discovery
+from googleapiclient.errors import HttpError
+
+import json
 
 
 class YoutubeSubscriptionsManager():
@@ -19,16 +22,24 @@ class YoutubeSubscriptionsManager():
 
     def request_subscriptions(self, page_token = ''):
         
+        try:
+            subscriptions_list = self.subscriptions.list(
+                part='id, snippet',
+                mine=True,
+                order="unread",
+                maxResults=50,
+                pageToken=page_token
 
-        subscriptions_list = self.subscriptions.list(
-            part='id, snippet',
-            mine=True,
-            order="unread",
-            maxResults=50,
-            pageToken=page_token
-
-        ).execute()
-
+            ).execute()
+            status = 200
+        except HttpError as error:
+            if error.resp.get('content-type', '').startswith('application/json'):
+                reason = json.loads(error.content).get('error').get('errors')[0].get('reason')    
+            status = error.resp.status
+            return {
+                'status': status,
+                'error': reason 
+            }
         items = []
 
         for item in subscriptions_list['items']:
@@ -40,6 +51,7 @@ class YoutubeSubscriptionsManager():
             items.append(new_item)
 
         response = {
+            'status': status,
             'items':items,
             'next_page_token':subscriptions_list['nextPageToken'],
             'pageInfo': subscriptions_list['pageInfo']
@@ -51,11 +63,24 @@ class YoutubeSubscriptionsManager():
         return response
 
     def delete_subscription(self, subscription_id):
-        response = self.subscriptions.delete(
-            id = subscription_id
-        ).execute()
+        try:
+            response = self.subscriptions.delete(
+                id = subscription_id
+            ).execute()
+            status = 200
+        except HttpError as error:
+            if error.resp.get('content-type', '').startswith('application/json'):
+                reason = json.loads(error.content).get('error').get('errors')[0].get('reason')    
+            status = error.resp.status
+            return {
+                'status': status,
+                'error': reason 
+            }
 
-        print(response)
+        return {
+            'status': status,
+            'message': 'Subscription deleted'
+        }
 
 subscriptions_manager = YoutubeSubscriptionsManager()
 

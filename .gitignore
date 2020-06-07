@@ -33,3 +33,4 @@ db.sqlite
 # Google secret credentials
 client_secret.json
 code_secret_client.json
+google-credentials.json

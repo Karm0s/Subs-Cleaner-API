@@ -11,6 +11,8 @@ from .ressources.authorization import authorization
 from .ressources.subscription import subscription
 from .ressources.error import error
 
+from dotenv import 
+
 db = SQLAlchemy()
 mm = Marshmallow()
 flask_bcrypt = Bcrypt()

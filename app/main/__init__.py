@@ -30,5 +30,5 @@ def create_app(config_name):
     return app
 
 
-if __name__ == '__main__':
-    app = create_app(os.getenv('ENV'))
+app = create_app(os.getenv('ENV') or 'dev')
+app.app_context().push()

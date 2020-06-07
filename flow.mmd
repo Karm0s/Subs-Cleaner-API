@@ -1,0 +1,7 @@
+sequenceDiagram
+User ->> Subs Cleaner API: /authorize
+Subs Cleaner API-->>Google API: request authorization link
+Google API-->> Subs Cleaner API: authorization link
+Subs Cleaner API-->> User: authorization link
+User -->> Google API: authorize app to access data
+Google API -->> Subs Cleaner API: redirect to /oauth2callback with code

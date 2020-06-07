@@ -5,9 +5,11 @@ import google.oauth2.credentials
 
 import googleapiclient.discovery
 
+from app import basedir
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+
 client_secret_file_path = os.path.join(basedir, 'google-credentials.json')
+print(client_secret_file_path)
 
 def get_authorization_url(redirect_url):
 

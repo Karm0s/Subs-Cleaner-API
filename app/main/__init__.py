@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -26,3 +28,7 @@ def create_app(config_name):
     app.register_blueprint(error)
 
     return app
+
+
+if __name__ == '__main__':
+    app = create_app(os.getenv('ENV'))

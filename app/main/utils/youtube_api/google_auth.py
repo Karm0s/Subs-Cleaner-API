@@ -12,8 +12,8 @@ def get_authorization_url(redirect_url):
 
 
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        client_secret_file_path, 
-        [
+        # client_secret_file_path, 
+        scopes=[
             'https://www.googleapis.com/auth/youtube.force-ssl',
             'https://www.googleapis.com/auth/youtubepartner',
             'https://www.googleapis.com/auth/youtube'

@@ -1,6 +1,9 @@
 import os
 
 from flask import Flask
+
+from flask_cors import CORS
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
@@ -17,6 +20,8 @@ flask_bcrypt = Bcrypt()
 
 def create_app(config_name):
     app = Flask(__name__)
+    CORS(app)
+    
     app.config.from_object(config_by_name[config_name])
 
     db.init_app(app)

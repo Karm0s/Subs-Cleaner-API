@@ -34,3 +34,5 @@ db.sqlite
 client_secret.json
 code_secret_client.json
 google-credentials.json
+
+.vscode
